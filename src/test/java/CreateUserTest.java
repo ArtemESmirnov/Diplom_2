@@ -1,13 +1,11 @@
 import io.restassured.response.Response;
 import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 import pojos.CreateUserBody;
 import pojos.LoginUserBody;
 
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.*;
-import static io.restassured.RestAssured.*;
 import static requestgenerators.CreateUserRequestGenerator.createUserRequest;
 import static requestgenerators.DeleteUserRequestGenerator.deleteUserRequest;
 import static requestgenerators.LoginUserRequestGenerator.loginUserRequest;
@@ -23,11 +21,6 @@ public class CreateUserTest {
     String email = "uniqueEmail@yandex.ru";
     String password = "uniquePassword";
     Response response;
-
-    @Before
-    public void setUp(){
-        baseURI = "https://stellarburgers.nomoreparties.site/";
-    }
 
     @Test
     public void createUserShouldBePossibleStatusCode(){
@@ -66,6 +59,7 @@ public class CreateUserTest {
 
         createUserRequest(user1, authRegisterApiPath);
         response = createUserRequest(user2, authRegisterApiPath);
+        assertFalse(response.path("success"));
         assertEquals(EQUAL_LOGINS_RESPONSE_STRING_MESSAGE, response.path("message"));
     }
 
@@ -82,6 +76,7 @@ public class CreateUserTest {
         CreateUserBody user = new CreateUserBody(email, password, "");
 
         response = createUserRequest(user, authRegisterApiPath);
+        assertFalse(response.path("success"));
         assertEquals(EMPTY_REQUIRED_FIELD_MESSAGE, response.path("message"));
     }
 
@@ -98,6 +93,7 @@ public class CreateUserTest {
         CreateUserBody user = new CreateUserBody("", password, name);
 
         response = createUserRequest(user, authRegisterApiPath);
+        assertFalse(response.path("success"));
         assertEquals(EMPTY_REQUIRED_FIELD_MESSAGE, response.path("message"));
     }
 
@@ -114,6 +110,7 @@ public class CreateUserTest {
         CreateUserBody user = new CreateUserBody(email, "", name);
 
         response = createUserRequest(user, authRegisterApiPath);
+        assertFalse(response.path("success"));
         assertEquals(EMPTY_REQUIRED_FIELD_MESSAGE, response.path("message"));
     }
 

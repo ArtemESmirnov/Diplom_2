@@ -1,7 +1,6 @@
 package requestgenerators;
 
 import io.restassured.RestAssured;
-import io.restassured.internal.RequestSpecificationImpl;
 import io.restassured.specification.RequestSpecification;
 
 public class Request {
