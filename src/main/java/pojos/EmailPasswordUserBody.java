@@ -1,17 +1,16 @@
 package pojos;
 
-public class CreateUserBody {
+public class EmailPasswordUserBody {
     private String email;
     private String password;
-    private String name;
 
-    public CreateUserBody(){}
+    public EmailPasswordUserBody(){}
 
-    public CreateUserBody(String email, String password, String name){
+    public EmailPasswordUserBody(String email, String password){
         this.email = email;
-        this.name = name;
         this.password = password;
     }
+
 
     public String getEmail() {
         return email;
@@ -27,13 +26,5 @@ public class CreateUserBody {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 }

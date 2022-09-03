@@ -2,7 +2,7 @@ package requestgenerators;
 
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-import pojos.LoginUserBody;
+import pojos.EmailPasswordUserBody;
 
 import static io.restassured.RestAssured.given;
 
@@ -11,7 +11,7 @@ public class LoginUserRequestGenerator extends Request{
         super(requestSpecification);
     }
 
-    public static Response loginUserRequest(LoginUserBody loginUserBody, String apiPath){
+    public static Response loginUserRequest(EmailPasswordUserBody loginUserBody, String apiPath){
         return given()
                 .spec(setRequestSpecification())
                 .header("Content-type", "application/json")

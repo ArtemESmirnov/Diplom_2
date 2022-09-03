@@ -1,8 +1,8 @@
 import io.restassured.response.Response;
 import org.junit.After;
 import org.junit.Test;
-import pojos.CreateUserBody;
-import pojos.LoginUserBody;
+import pojos.WholeUserBody;
+import pojos.EmailPasswordUserBody;
 
 import static org.apache.http.HttpStatus.*;
 import static org.junit.Assert.*;
@@ -24,7 +24,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserShouldBePossibleStatusCode(){
-        CreateUserBody user = new CreateUserBody(email, password, name);
+        WholeUserBody user = new WholeUserBody(email, password, name);
 
         response = createUserRequest(user, authRegisterApiPath);
         assertEquals(SC_OK, response.statusCode());
@@ -32,7 +32,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserShouldBePossibleBody(){
-        CreateUserBody user = new CreateUserBody(email, password, name);
+        WholeUserBody user = new WholeUserBody(email, password, name);
 
         response = createUserRequest(user, authRegisterApiPath);
         assertTrue(response.path("success"));
@@ -44,8 +44,8 @@ public class CreateUserTest {
 
     @Test
     public void createSecondEqualUserShouldFailStatusCode(){
-        CreateUserBody user1 = new CreateUserBody(email, password, name);
-        CreateUserBody user2 = new CreateUserBody(email, password, name);
+        WholeUserBody user1 = new WholeUserBody(email, password, name);
+        WholeUserBody user2 = new WholeUserBody(email, password, name);
 
         createUserRequest(user1, authRegisterApiPath);
         response = createUserRequest(user2, authRegisterApiPath);
@@ -54,8 +54,8 @@ public class CreateUserTest {
 
     @Test
     public void createSecondEqualUserShouldFailBody(){
-        CreateUserBody user1 = new CreateUserBody(email, password, name);
-        CreateUserBody user2 = new CreateUserBody(email, password, name);
+        WholeUserBody user1 = new WholeUserBody(email, password, name);
+        WholeUserBody user2 = new WholeUserBody(email, password, name);
 
         createUserRequest(user1, authRegisterApiPath);
         response = createUserRequest(user2, authRegisterApiPath);
@@ -65,7 +65,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutNameShouldFailStatusCode(){
-        CreateUserBody user = new CreateUserBody(email, password, "");
+        WholeUserBody user = new WholeUserBody(email, password, "");
 
         response = createUserRequest(user, authRegisterApiPath);
         assertEquals(SC_FORBIDDEN, response.statusCode());
@@ -73,7 +73,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutNameShouldFailBody(){
-        CreateUserBody user = new CreateUserBody(email, password, "");
+        WholeUserBody user = new WholeUserBody(email, password, "");
 
         response = createUserRequest(user, authRegisterApiPath);
         assertFalse(response.path("success"));
@@ -82,7 +82,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutEmailShouldFailStatusCode(){
-        CreateUserBody user = new CreateUserBody("", password, name);
+        WholeUserBody user = new WholeUserBody("", password, name);
 
         response = createUserRequest(user, authRegisterApiPath);
         assertEquals(SC_FORBIDDEN, response.statusCode());
@@ -90,7 +90,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutEmailShouldFailBody(){
-        CreateUserBody user = new CreateUserBody("", password, name);
+        WholeUserBody user = new WholeUserBody("", password, name);
 
         response = createUserRequest(user, authRegisterApiPath);
         assertFalse(response.path("success"));
@@ -99,7 +99,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutPasswordShouldFailStatusCode(){
-        CreateUserBody user = new CreateUserBody(email, "", name);
+        WholeUserBody user = new WholeUserBody(email, "", name);
 
         response = createUserRequest(user, authRegisterApiPath);
         assertEquals(SC_FORBIDDEN, response.statusCode());
@@ -107,7 +107,7 @@ public class CreateUserTest {
 
     @Test
     public void createUserWithoutPasswordShouldFailBody(){
-        CreateUserBody user = new CreateUserBody(email, "", name);
+        WholeUserBody user = new WholeUserBody(email, "", name);
 
         response = createUserRequest(user, authRegisterApiPath);
         assertFalse(response.path("success"));
@@ -117,7 +117,7 @@ public class CreateUserTest {
     @After
     public void deleteUser(){
         if(response.statusCode() == SC_OK || response.statusCode() == SC_FORBIDDEN){
-            LoginUserBody loginUserBody = new LoginUserBody(email, password);
+            EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
             String token;
 
             Response loginResponse = loginUserRequest(loginUserBody, authLoginApiPath);
