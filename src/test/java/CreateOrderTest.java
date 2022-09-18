@@ -123,7 +123,7 @@ public class CreateOrderTest {
     }
 
     @Test
-    public void createOrderWithLoginInvalidIngredientsHashShouldBePossibleStatusCode(){
+    public void createOrderWithLoginInvalidIngredientsHashShouldFailStatusCode(){
         createAndLoginUser();
         String[] invalidHashList = {"this", "hashes", "don't", "exist"};
         CreateOrderBody createOrderBody = new CreateOrderBody(invalidHashList);
@@ -135,7 +135,7 @@ public class CreateOrderTest {
     }
 
     @Test
-    public void createOrderWithoutLoginInvalidIngredientsHashShouldBePossibleBody(){
+    public void createOrderWithoutLoginInvalidIngredientsHashShouldFailBody(){
         createAndLoginUser();
         String[] invalidHashList = {"this", "hashes", "don't", "exist"};
         CreateOrderBody createOrderBody = new CreateOrderBody(invalidHashList);
