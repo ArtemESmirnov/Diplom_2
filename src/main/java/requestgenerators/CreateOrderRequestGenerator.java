@@ -15,7 +15,7 @@ public class CreateOrderRequestGenerator extends Request{
     public static Response createOrderRequest(CreateOrderBody createOrderBody, String apiPath, String token){
         return given()
                 .spec(setRequestSpecification())
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", token)
                 .and()
                 .body(createOrderBody)
                 .when()

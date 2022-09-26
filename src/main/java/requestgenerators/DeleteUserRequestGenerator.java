@@ -13,7 +13,7 @@ public class DeleteUserRequestGenerator extends Request{
     public static Response deleteUserRequest(String token, String apiPath){
         return given()
                 .spec(setRequestSpecification())
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", token)
                 .when()
                 .delete(apiPath);
     }

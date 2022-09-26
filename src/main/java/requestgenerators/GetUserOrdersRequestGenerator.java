@@ -13,7 +13,7 @@ public class GetUserOrdersRequestGenerator extends Request{
     public static Response getUserOrdersRequest(String token, String apiPath){
         return given()
                 .spec(setRequestSpecification())
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", token)
                 .when()
                 .get(apiPath);
     }

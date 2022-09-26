@@ -16,30 +16,29 @@ import static requestgenerators.GetIngredientsRequestGenerator.getIngredientsHas
 import static requestgenerators.LoginUserRequestGenerator.loginUserRequest;
 
 public class CreateOrderTest {
-    final static String INGREDIENTS_API_PATH = "/api/ingredients";
-    final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
-    final static String AUTH_USER_API_PATH = "/api/auth/user";
-    final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
-    final static String ORDERS_API_PATH = "/api/orders";
-    final static String NO_INGREDIENTS_MESSAGE = "Ingredient ids must be provided";
-    final String name = "uniqueName";
-    final String email = "uniqueEmail@yandex.ru";
-    final String password = "uniquePassword";
-    String[] ingredients;
-    String[] ingredientsToSend;
-    final Random random = new Random();
-    Response orderResponse;
-    Response userResponse;
-    String userToken;
+    private final static String INGREDIENTS_API_PATH = "/api/ingredients";
+    private final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
+    private final static String AUTH_USER_API_PATH = "/api/auth/user";
+    private final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
+    private final static String ORDERS_API_PATH = "/api/orders";
+    private final static String NO_INGREDIENTS_MESSAGE = "Ingredient ids must be provided";
+    private final String NAME = "uniqueName";
+    private final String EMAIL = "uniqueEmail@yandex.ru";
+    private final String PASSWORD = "uniquePassword";
+    private String[] ingredients;
+    private String[] ingredientsToSend;
+    private final Random random = new Random();
+    private Response orderResponse;
+    private Response userResponse;
+    private String userToken;
 
     private void createAndLoginUser(){
-        WholeUserBody userBody = new WholeUserBody(email, password, name);
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
+        WholeUserBody userBody = new WholeUserBody(EMAIL, PASSWORD, NAME);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, PASSWORD);
 
         createUserRequest(userBody, AUTH_REGISTER_API_PATH);
         userResponse = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
-        userToken = userResponse.path("accessToken")
-                .toString().replaceAll("Bearer ", "");
+        userToken = userResponse.path("accessToken").toString();
     }
 
     private void createIngredientsList(){

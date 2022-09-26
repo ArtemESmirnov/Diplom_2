@@ -12,18 +12,17 @@ import static requestgenerators.DeleteUserRequestGenerator.deleteUserRequest;
 import static requestgenerators.LoginUserRequestGenerator.loginUserRequest;
 
 public class LoginUserTest {
-    final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
-    final static String AUTH_USER_API_PATH = "/api/auth/user";
-    final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
-    final static String INCORRECT_CREDENTIALS_MESSAGE = "email or password are incorrect";
-
-    final String name = "uniqueName";
-    final String email = "uniqueEmail@yandex.ru";
-    final String password = "uniquePassword";
+    private final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
+    private final static String AUTH_USER_API_PATH = "/api/auth/user";
+    private final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
+    private final static String INCORRECT_CREDENTIALS_MESSAGE = "email or password are incorrect";
+    private final String EMAIL = "uniqueEmail@yandex.ru";
+    private final String PASSWORD = "uniquePassword";
 
     @Before
     public void createUser(){
-        WholeUserBody user = new WholeUserBody(email, password, name);
+        String name = "uniqueName";
+        WholeUserBody user = new WholeUserBody(EMAIL, PASSWORD, name);
 
         createUserRequest(user, AUTH_REGISTER_API_PATH).statusCode();
     }
@@ -31,7 +30,7 @@ public class LoginUserTest {
     @Test
     public void userLoginShouldBePossibleStatusCode(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, PASSWORD);
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_OK, response.statusCode());
@@ -40,7 +39,7 @@ public class LoginUserTest {
     @Test
     public void userLoginShouldBePossibleBody(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, PASSWORD);
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertTrue(response.path("success"));
@@ -53,7 +52,7 @@ public class LoginUserTest {
     @Test
     public void userIncorrectEmailLoginShouldFailStatusCode(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", PASSWORD);
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
@@ -62,7 +61,7 @@ public class LoginUserTest {
     @Test
     public void userIncorrectEmailLoginShouldFailBody(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", PASSWORD);
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
@@ -72,7 +71,7 @@ public class LoginUserTest {
     @Test
     public void userIncorrectPasswordLoginShouldFailStatusCode(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "password");
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, "password");
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
@@ -81,7 +80,7 @@ public class LoginUserTest {
     @Test
     public void userIncorrectPasswordLoginShouldFailBody(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "password");
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, "password");
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
@@ -110,7 +109,7 @@ public class LoginUserTest {
     @Test
     public void userNoEmailLoginShouldFailStatusCode(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", PASSWORD);
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
@@ -119,7 +118,7 @@ public class LoginUserTest {
     @Test
     public void userNoEmailLoginShouldFailBody(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", PASSWORD);
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
@@ -129,7 +128,7 @@ public class LoginUserTest {
     @Test
     public void userNoPasswordLoginShouldFailStatusCode(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "");
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, "");
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
@@ -138,7 +137,7 @@ public class LoginUserTest {
     @Test
     public void userNoPasswordLoginShouldFailBody(){
         Response response;
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "");
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, "");
 
         response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
@@ -166,13 +165,12 @@ public class LoginUserTest {
 
     @After
     public void deleteUser(){
-        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
+        EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(EMAIL, PASSWORD);
         String token;
 
         Response loginResponse = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         if(loginResponse.statusCode() == SC_OK) {
-            token = loginResponse.path("accessToken")
-                    .toString().replaceAll("Bearer ", "");
+            token = loginResponse.path("accessToken").toString();
             assertEquals(SC_ACCEPTED, deleteUserRequest(token, AUTH_USER_API_PATH).statusCode());
         }
     }

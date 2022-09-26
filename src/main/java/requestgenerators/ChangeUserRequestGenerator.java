@@ -14,7 +14,7 @@ public class ChangeUserRequestGenerator extends Request{
     public static Response changeUserRequest(UserBody changeUserBody, String apiPath, String token){
         return given()
                 .spec(setRequestSpecification())
-                .header("Authorization", "Bearer " + token)
+                .header("Authorization", token)
                 .and()
                 .body(changeUserBody)
                 .when()
