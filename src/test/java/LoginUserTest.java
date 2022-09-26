@@ -17,9 +17,9 @@ public class LoginUserTest {
     final static String authLoginApiPath = "/api/auth/login";
     final String INCORRECT_CREDENTIALS_MESSAGE = "email or password are incorrect";
 
-    String name = "uniqueName";
-    String email = "uniqueEmail@yandex.ru";
-    String password = "uniquePassword";
+    final String name = "uniqueName";
+    final String email = "uniqueEmail@yandex.ru";
+    final String password = "uniquePassword";
 
     @Before
     public void createUser(){

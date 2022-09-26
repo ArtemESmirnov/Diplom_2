@@ -14,7 +14,6 @@ public class LoginUserRequestGenerator extends Request{
     public static Response loginUserRequest(EmailPasswordUserBody loginUserBody, String apiPath){
         return given()
                 .spec(setRequestSpecification())
-                .header("Content-type", "application/json")
                 .and()
                 .body(loginUserBody)
                 .when()

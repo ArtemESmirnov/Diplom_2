@@ -1,6 +1,6 @@
 package pojos;
 
-public class ChangeUserNameBody {
+public class ChangeUserNameBody implements UserBody{
     private String name;
 
     public ChangeUserNameBody(){}

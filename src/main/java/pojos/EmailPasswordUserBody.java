@@ -1,6 +1,6 @@
 package pojos;
 
-public class EmailPasswordUserBody {
+public class EmailPasswordUserBody implements UserBody{
     private String email;
     private String password;
 

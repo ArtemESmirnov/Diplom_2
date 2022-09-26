@@ -14,8 +14,6 @@ public class CreateUserRequestGenerator extends Request{
     public static Response createUserRequest(WholeUserBody createUserBody, String apiPath){
         return given()
                 .spec(setRequestSpecification())
-                .header("Content-type", "application/json")
-                .and()
                 .body(createUserBody)
                 .when()
                 .post(apiPath);

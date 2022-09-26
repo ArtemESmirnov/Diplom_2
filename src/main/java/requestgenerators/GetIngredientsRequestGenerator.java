@@ -2,7 +2,6 @@ package requestgenerators;
 
 import io.restassured.specification.RequestSpecification;
 import pojos.GetIngredientsResponseBody;
-import pojos.IngredientData;
 
 import static io.restassured.RestAssured.given;
 
@@ -14,7 +13,6 @@ public class GetIngredientsRequestGenerator extends Request{
     public static String[] getIngredientsHashList(String apiPath){
         GetIngredientsResponseBody ingredientsResponseBody = given()
                 .spec(setRequestSpecification())
-                .header("Content-type", "application/json")
                 .get(apiPath)
                 .as(GetIngredientsResponseBody.class);
         String[] ingredientList = new String[ingredientsResponseBody.getData().length];

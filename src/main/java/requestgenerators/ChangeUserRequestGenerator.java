@@ -1,6 +1,5 @@
 package requestgenerators;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import pojos.*;
@@ -12,80 +11,10 @@ public class ChangeUserRequestGenerator extends Request{
         super(requestSpecification);
     }
 
-    public static Response changeUserRequest(WholeUserBody changeUserBody, String apiPath, String token){
+    public static Response changeUserRequest(UserBody changeUserBody, String apiPath, String token){
         return given()
                 .spec(setRequestSpecification())
-                .headers(
-                        "Authorization",
-                        "Bearer " + token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON)
-                .and()
-                .body(changeUserBody)
-                .when()
-                .patch(apiPath);
-    }
-
-    public static Response changeUserRequest(EmailPasswordUserBody changeUserBody, String apiPath, String token){
-        return given()
-                .spec(setRequestSpecification())
-                .headers(
-                        "Authorization",
-                        "Bearer " + token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON)
-                .and()
-                .body(changeUserBody)
-                .when()
-                .patch(apiPath);
-    }
-
-    public static Response changeUserRequest(ChangeUserPasswordBody changeUserBody, String apiPath, String token){
-        return given()
-                .spec(setRequestSpecification())
-                .headers(
-                        "Authorization",
-                        "Bearer " + token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON)
-                .and()
-                .body(changeUserBody)
-                .when()
-                .patch(apiPath);
-    }
-
-    public static Response changeUserRequest(ChangeUserEmailBody changeUserBody, String apiPath, String token){
-        return given()
-                .spec(setRequestSpecification())
-                .headers(
-                        "Authorization",
-                        "Bearer " + token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON)
-                .and()
-                .body(changeUserBody)
-                .when()
-                .patch(apiPath);
-    }
-
-    public static Response changeUserRequest(ChangeUserNameBody changeUserBody, String apiPath, String token){
-        return given()
-                .spec(setRequestSpecification())
-                .headers(
-                        "Authorization",
-                        "Bearer " + token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON)
+                .header("Authorization", "Bearer " + token)
                 .and()
                 .body(changeUserBody)
                 .when()

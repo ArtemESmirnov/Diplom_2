@@ -1,6 +1,5 @@
 package requestgenerators;
 
-import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 
@@ -14,13 +13,7 @@ public class DeleteUserRequestGenerator extends Request{
     public static Response deleteUserRequest(String token, String apiPath){
         return given()
                 .spec(setRequestSpecification())
-                .headers(
-                        "Authorization",
-                        "Bearer " + token,
-                        "Content-Type",
-                        ContentType.JSON,
-                        "Accept",
-                        ContentType.JSON)
+                .header("Authorization", "Bearer " + token)
                 .when()
                 .delete(apiPath);
     }

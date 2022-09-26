@@ -1,6 +1,6 @@
 package pojos;
 
-public class WholeUserBody {
+public class WholeUserBody implements UserBody{
     private String email;
     private String password;
     private String name;

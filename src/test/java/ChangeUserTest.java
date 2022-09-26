@@ -17,12 +17,12 @@ public class ChangeUserTest {
     final static String authLoginApiPath = "/api/auth/login";
     final String CHANGE_WITHOUT_LOGIN_MESSAGE = "You should be authorised";
     final String EXISTING_EMAIL_MESSAGE = "User with such email already exists";
-    String name = "uniqueName";
-    String email = "uniqueEmail@yandex.ru";
-    String password = "uniquePassword";
-    String newName = "newName";
-    String newEmail = "newEmail@ya.ru";
-    String newPassword = "newPassword";
+    final String name = "uniqueName";
+    final String email = "uniqueEmail@yandex.ru";
+    final String password = "uniquePassword";
+    final String newName = "newName";
+    final String newEmail = "newEmail@ya.ru";
+    final String newPassword = "newPassword";
     Response response;
     String token;
 

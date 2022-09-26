@@ -23,12 +23,12 @@ public class GetUserOrdersTest {
     final static String authLoginApiPath = "/api/auth/login";
     final static String ordersApiPath = "/api/orders";
     final String UNAUTHORIZED_MESSAGE = "You should be authorised";
-    String name = "uniqueName";
-    String email = "uniqueEmail@yandex.ru";
-    String password = "uniquePassword";
+    final String name = "uniqueName";
+    final String email = "uniqueEmail@yandex.ru";
+    final String password = "uniquePassword";
     String[] ingredients;
     String[] ingredientsToSend;
-    Random random = new Random();
+    final Random random = new Random();
     Response orderResponse;
     Response userResponse;
     String userToken;

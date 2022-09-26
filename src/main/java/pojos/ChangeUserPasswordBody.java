@@ -1,6 +1,6 @@
 package pojos;
 
-public class ChangeUserPasswordBody {
+public class ChangeUserPasswordBody implements UserBody{
     private String password;
 
     public ChangeUserPasswordBody(){}

@@ -1,6 +1,6 @@
 package pojos;
 
-public class ChangeUserEmailBody {
+public class ChangeUserEmailBody implements UserBody{
     private String email;
 
     public ChangeUserEmailBody(){}

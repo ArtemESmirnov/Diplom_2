@@ -17,9 +17,9 @@ public class CreateUserTest {
     final String EQUAL_LOGINS_RESPONSE_STRING_MESSAGE = "User already exists";
     final String EMPTY_REQUIRED_FIELD_MESSAGE = "Email, password and name are required fields";
 
-    String name = "uniqueName";
-    String email = "uniqueEmail@yandex.ru";
-    String password = "uniquePassword";
+    final String name = "uniqueName";
+    final String email = "uniqueEmail@yandex.ru";
+    final String password = "uniquePassword";
     Response response;
 
     @Test

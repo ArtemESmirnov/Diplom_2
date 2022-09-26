@@ -1,6 +1,7 @@
 package requestgenerators;
 
 import io.restassured.RestAssured;
+import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 public class Request {
@@ -11,7 +12,12 @@ public class Request {
     }
 
     public static RequestSpecification setRequestSpecification() {
-        requestSpecification = RestAssured.given().baseUri("https://stellarburgers.nomoreparties.site/");
+        requestSpecification = RestAssured.given().baseUri("https://stellarburgers.nomoreparties.site/")
+                .headers(
+                        "Content-Type",
+                        ContentType.JSON,
+                        "Accept",
+                        ContentType.JSON);
         return requestSpecification;
     }
 }
