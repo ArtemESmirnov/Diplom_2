@@ -12,10 +12,10 @@ import static requestgenerators.DeleteUserRequestGenerator.deleteUserRequest;
 import static requestgenerators.LoginUserRequestGenerator.loginUserRequest;
 
 public class LoginUserTest {
-    final static String authRegisterApiPath = "/api/auth/register";
-    final static String authUserApiPath = "/api/auth/user";
-    final static String authLoginApiPath = "/api/auth/login";
-    final String INCORRECT_CREDENTIALS_MESSAGE = "email or password are incorrect";
+    final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
+    final static String AUTH_USER_API_PATH = "/api/auth/user";
+    final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
+    final static String INCORRECT_CREDENTIALS_MESSAGE = "email or password are incorrect";
 
     final String name = "uniqueName";
     final String email = "uniqueEmail@yandex.ru";
@@ -25,7 +25,7 @@ public class LoginUserTest {
     public void createUser(){
         WholeUserBody user = new WholeUserBody(email, password, name);
 
-        createUserRequest(user, authRegisterApiPath).statusCode();
+        createUserRequest(user, AUTH_REGISTER_API_PATH).statusCode();
     }
 
     @Test
@@ -33,7 +33,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_OK, response.statusCode());
     }
 
@@ -42,7 +42,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertTrue(response.path("success"));
         assertNotNull(response.path("accessToken"));
         assertNotNull(response.path("refreshToken"));
@@ -55,7 +55,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", password);
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
@@ -64,7 +64,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", password);
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
         assertEquals(INCORRECT_CREDENTIALS_MESSAGE, response.path("message"));
     }
@@ -74,7 +74,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "password");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
@@ -83,7 +83,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "password");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
         assertEquals(INCORRECT_CREDENTIALS_MESSAGE, response.path("message"));
     }
@@ -93,7 +93,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", "password");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
@@ -102,7 +102,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("email", "password");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
         assertEquals(INCORRECT_CREDENTIALS_MESSAGE, response.path("message"));
     }
@@ -112,7 +112,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", password);
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
@@ -121,7 +121,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", password);
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
         assertEquals(INCORRECT_CREDENTIALS_MESSAGE, response.path("message"));
     }
@@ -131,7 +131,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
@@ -140,7 +140,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, "");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
         assertEquals(INCORRECT_CREDENTIALS_MESSAGE, response.path("message"));
     }
@@ -150,7 +150,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", "");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertEquals(SC_UNAUTHORIZED, response.statusCode());
     }
 
@@ -159,7 +159,7 @@ public class LoginUserTest {
         Response response;
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody("", "");
 
-        response = loginUserRequest(loginUserBody, authLoginApiPath);
+        response = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         assertFalse(response.path("success"));
         assertEquals(INCORRECT_CREDENTIALS_MESSAGE, response.path("message"));
     }
@@ -169,11 +169,11 @@ public class LoginUserTest {
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
         String token;
 
-        Response loginResponse = loginUserRequest(loginUserBody, authLoginApiPath);
+        Response loginResponse = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         if(loginResponse.statusCode() == SC_OK) {
             token = loginResponse.path("accessToken")
                     .toString().replaceAll("Bearer ", "");
-            assertEquals(SC_ACCEPTED, deleteUserRequest(token, authUserApiPath).statusCode());
+            assertEquals(SC_ACCEPTED, deleteUserRequest(token, AUTH_USER_API_PATH).statusCode());
         }
     }
 }

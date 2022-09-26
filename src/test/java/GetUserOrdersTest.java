@@ -17,12 +17,12 @@ import static requestgenerators.GetUserOrdersRequestGenerator.getUserOrdersReque
 import static requestgenerators.LoginUserRequestGenerator.loginUserRequest;
 
 public class GetUserOrdersTest {
-    final static String ingredientsApiPath = "/api/ingredients";
-    final static String authRegisterApiPath = "/api/auth/register";
-    final static String authUserApiPath = "/api/auth/user";
-    final static String authLoginApiPath = "/api/auth/login";
-    final static String ordersApiPath = "/api/orders";
-    final String UNAUTHORIZED_MESSAGE = "You should be authorised";
+    final static String INGREDIENTS_API_PATH = "/api/ingredients";
+    final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
+    final static String AUTH_USER_API_PATH = "/api/auth/user";
+    final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
+    final static String ORDERS_API_PATH = "/api/orders";
+    final static String UNAUTHORIZED_MESSAGE = "You should be authorised";
     final String name = "uniqueName";
     final String email = "uniqueEmail@yandex.ru";
     final String password = "uniquePassword";
@@ -37,14 +37,14 @@ public class GetUserOrdersTest {
         WholeUserBody userBody = new WholeUserBody(email, password, name);
         EmailPasswordUserBody loginUserBody = new EmailPasswordUserBody(email, password);
 
-        createUserRequest(userBody, authRegisterApiPath);
-        userResponse = loginUserRequest(loginUserBody, authLoginApiPath);
+        createUserRequest(userBody, AUTH_REGISTER_API_PATH);
+        userResponse = loginUserRequest(loginUserBody, AUTH_LOGIN_API_PATH);
         userToken = userResponse.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
 
     private void createIngredientsList(){
-        ingredients = getIngredientsHashList(ingredientsApiPath);
+        ingredients = getIngredientsHashList(INGREDIENTS_API_PATH);
         int numberOfIngredients = random.nextInt(ingredients.length) + 1;
 
         ingredientsToSend = new String[numberOfIngredients];
@@ -55,7 +55,7 @@ public class GetUserOrdersTest {
     private void createOrder(){
         CreateOrderBody createOrderBody = new CreateOrderBody(ingredientsToSend);
 
-        orderResponse = createOrderRequest(createOrderBody, ordersApiPath, userToken);
+        orderResponse = createOrderRequest(createOrderBody, ORDERS_API_PATH, userToken);
     }
 
     @Test
@@ -66,10 +66,10 @@ public class GetUserOrdersTest {
         createIngredientsList();
         createOrder();
 
-        getUserOrdersResponse = getUserOrdersRequest(userToken, ordersApiPath);
+        getUserOrdersResponse = getUserOrdersRequest(userToken, ORDERS_API_PATH);
         assertEquals(SC_OK, getUserOrdersResponse.statusCode());
 
-        deleteUserRequest(userToken, authUserApiPath);
+        deleteUserRequest(userToken, AUTH_USER_API_PATH);
     }
 
     @Test
@@ -80,13 +80,13 @@ public class GetUserOrdersTest {
         createIngredientsList();
         createOrder();
 
-        getUserOrdersResponse = getUserOrdersRequest(userToken, ordersApiPath);
+        getUserOrdersResponse = getUserOrdersRequest(userToken, ORDERS_API_PATH);
         assertTrue(getUserOrdersResponse.path("success"));
         assertNotNull(getUserOrdersResponse.path("orders"));
         assertNotNull(getUserOrdersResponse.path("total"));
         assertNotNull(getUserOrdersResponse.path("totalToday"));
 
-        deleteUserRequest(userToken, authUserApiPath);
+        deleteUserRequest(userToken, AUTH_USER_API_PATH);
     }
 
     @Test
@@ -96,7 +96,7 @@ public class GetUserOrdersTest {
         createIngredientsList();
         createOrder();
 
-        getUserOrdersResponse = getUserOrdersRequest("", ordersApiPath);
+        getUserOrdersResponse = getUserOrdersRequest("", ORDERS_API_PATH);
         assertEquals(SC_UNAUTHORIZED, getUserOrdersResponse.statusCode());
     }
 
@@ -107,7 +107,7 @@ public class GetUserOrdersTest {
         createIngredientsList();
         createOrder();
 
-        getUserOrdersResponse = getUserOrdersRequest("", ordersApiPath);
+        getUserOrdersResponse = getUserOrdersRequest("", ORDERS_API_PATH);
         assertEquals(UNAUTHORIZED_MESSAGE, getUserOrdersResponse.path("message"));
     }
 }

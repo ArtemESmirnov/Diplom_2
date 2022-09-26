@@ -12,11 +12,11 @@ import static requestgenerators.DeleteUserRequestGenerator.deleteUserRequest;
 import static requestgenerators.LoginUserRequestGenerator.loginUserRequest;
 
 public class ChangeUserTest {
-    final static String authRegisterApiPath = "/api/auth/register";
-    final static String authUserApiPath = "/api/auth/user";
-    final static String authLoginApiPath = "/api/auth/login";
-    final String CHANGE_WITHOUT_LOGIN_MESSAGE = "You should be authorised";
-    final String EXISTING_EMAIL_MESSAGE = "User with such email already exists";
+    final static String AUTH_REGISTER_API_PATH = "/api/auth/register";
+    final static String AUTH_USER_API_PATH = "/api/auth/user";
+    final static String AUTH_LOGIN_API_PATH = "/api/auth/login";
+    final static String CHANGE_WITHOUT_LOGIN_MESSAGE = "You should be authorised";
+    final static String EXISTING_EMAIL_MESSAGE = "User with such email already exists";
     final String name = "uniqueName";
     final String email = "uniqueEmail@yandex.ru";
     final String password = "uniquePassword";
@@ -30,7 +30,7 @@ public class ChangeUserTest {
     public void createUser(){
         WholeUserBody userBody = new WholeUserBody(email, password, name);
 
-        createUserRequest(userBody, authRegisterApiPath).statusCode();
+        createUserRequest(userBody, AUTH_REGISTER_API_PATH).statusCode();
     }
 
     @Test
@@ -39,10 +39,10 @@ public class ChangeUserTest {
         Response changeResponse;
         WholeUserBody newUserBody = new WholeUserBody(newEmail, newPassword, newName);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(SC_OK, changeResponse.statusCode());
     }
 
@@ -52,10 +52,10 @@ public class ChangeUserTest {
         Response changeResponse;
         WholeUserBody newUserBody = new WholeUserBody(newEmail, newPassword, newName);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertTrue(changeResponse.path("success"));
         assertEquals(newEmail.toLowerCase(), changeResponse.path("user.email"));
         assertEquals(newName, changeResponse.path("user.name"));
@@ -67,10 +67,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserEmailBody newUserBody = new ChangeUserEmailBody(newEmail);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(SC_OK, changeResponse.statusCode());
     }
 
@@ -80,10 +80,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserEmailBody newUserBody = new ChangeUserEmailBody(newEmail);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertTrue(changeResponse.path("success"));
         assertEquals(newEmail.toLowerCase(), changeResponse.path("user.email"));
         assertEquals(name, changeResponse.path("user.name"));
@@ -95,10 +95,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserNameBody newUserBody = new ChangeUserNameBody(newName);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(SC_OK, changeResponse.statusCode());
     }
 
@@ -108,10 +108,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserNameBody newUserBody = new ChangeUserNameBody(newName);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertTrue(changeResponse.path("success"));
         assertEquals(email.toLowerCase(), changeResponse.path("user.email"));
         assertEquals(newName, changeResponse.path("user.name"));
@@ -123,10 +123,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserPasswordBody newUserBody = new ChangeUserPasswordBody(newPassword);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(SC_OK, changeResponse.statusCode());
     }
 
@@ -136,10 +136,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserPasswordBody newUserBody = new ChangeUserPasswordBody(newPassword);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertTrue(changeResponse.path("success"));
         assertEquals(email.toLowerCase(), changeResponse.path("user.email"));
         assertEquals(name, changeResponse.path("user.name"));
@@ -151,10 +151,10 @@ public class ChangeUserTest {
         Response changeResponse;
         WholeUserBody newUserBody = new WholeUserBody(newEmail, newPassword, newName);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertEquals(SC_UNAUTHORIZED, changeResponse.statusCode());
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -165,11 +165,11 @@ public class ChangeUserTest {
         Response changeResponse;
         WholeUserBody newUserBody = new WholeUserBody(newEmail, newPassword, newName);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertFalse(changeResponse.path("success"));
         assertEquals(CHANGE_WITHOUT_LOGIN_MESSAGE, changeResponse.path("message"));
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -180,10 +180,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserEmailBody newUserBody = new ChangeUserEmailBody(newEmail);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertEquals(SC_UNAUTHORIZED, changeResponse.statusCode());
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -194,11 +194,11 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserEmailBody newUserBody = new ChangeUserEmailBody(newEmail);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertFalse(changeResponse.path("success"));
         assertEquals(CHANGE_WITHOUT_LOGIN_MESSAGE, changeResponse.path("message"));
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -209,10 +209,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserNameBody newUserBody = new ChangeUserNameBody(newName);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertEquals(SC_UNAUTHORIZED, changeResponse.statusCode());
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -223,11 +223,11 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserNameBody newUserBody = new ChangeUserNameBody(newName);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertFalse(changeResponse.path("success"));
         assertEquals(CHANGE_WITHOUT_LOGIN_MESSAGE, changeResponse.path("message"));
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -238,10 +238,10 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserPasswordBody newUserBody = new ChangeUserPasswordBody(newPassword);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertEquals(SC_UNAUTHORIZED, changeResponse.statusCode());
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -252,11 +252,11 @@ public class ChangeUserTest {
         Response changeResponse;
         ChangeUserPasswordBody newUserBody = new ChangeUserPasswordBody(newPassword);
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, "");
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, "");
         assertFalse(changeResponse.path("success"));
         assertEquals(CHANGE_WITHOUT_LOGIN_MESSAGE, changeResponse.path("message"));
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
     }
@@ -264,85 +264,85 @@ public class ChangeUserTest {
     @Test
     public void changeAllUserInfoWithExistingEmailShouldFailStatusCode(){
         WholeUserBody secondUser = new WholeUserBody(newEmail, password, name);
-        createUserRequest(secondUser, authRegisterApiPath);
+        createUserRequest(secondUser, AUTH_REGISTER_API_PATH);
         EmailPasswordUserBody emailPasswordUserBody = new EmailPasswordUserBody(email, password);
         Response changeResponse;
         WholeUserBody newUserBody = new WholeUserBody(newEmail, newPassword, newName);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(SC_FORBIDDEN, changeResponse.statusCode());
 
         EmailPasswordUserBody secondUserLoginBody = new EmailPasswordUserBody(newEmail, password);
-        deleteUserRequest(loginUserRequest(secondUserLoginBody, authLoginApiPath)
-                .path("accessToken").toString().replaceAll("Bearer ", ""), authUserApiPath);
+        deleteUserRequest(loginUserRequest(secondUserLoginBody, AUTH_LOGIN_API_PATH)
+                .path("accessToken").toString().replaceAll("Bearer ", ""), AUTH_USER_API_PATH);
     }
 
     @Test
     public void changeAllUserInfoWithExistingEmailShouldFailBody(){
         WholeUserBody secondUser = new WholeUserBody(newEmail, password, name);
-        createUserRequest(secondUser, authRegisterApiPath);
+        createUserRequest(secondUser, AUTH_REGISTER_API_PATH);
         EmailPasswordUserBody emailPasswordUserBody = new EmailPasswordUserBody(email, password);
         Response changeResponse;
         WholeUserBody newUserBody = new WholeUserBody(newEmail, newPassword, newName);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(EXISTING_EMAIL_MESSAGE, changeResponse.path("message"));
 
         EmailPasswordUserBody secondUserLoginBody = new EmailPasswordUserBody(newEmail, password);
-        deleteUserRequest(loginUserRequest(secondUserLoginBody, authLoginApiPath)
-                .path("accessToken").toString().replaceAll("Bearer ", ""), authUserApiPath);
+        deleteUserRequest(loginUserRequest(secondUserLoginBody, AUTH_LOGIN_API_PATH)
+                .path("accessToken").toString().replaceAll("Bearer ", ""), AUTH_USER_API_PATH);
     }
 
     @Test
     public void changeUserEmailWithExistingEmailShouldFailStatusCode(){
         WholeUserBody secondUser = new WholeUserBody(newEmail, password, name);
-        createUserRequest(secondUser, authRegisterApiPath);
+        createUserRequest(secondUser, AUTH_REGISTER_API_PATH);
         EmailPasswordUserBody emailPasswordUserBody = new EmailPasswordUserBody(email, password);
         Response changeResponse;
         ChangeUserEmailBody newUserBody = new ChangeUserEmailBody(newEmail);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(SC_FORBIDDEN, changeResponse.statusCode());
 
         EmailPasswordUserBody secondUserLoginBody = new EmailPasswordUserBody(newEmail, password);
-        deleteUserRequest(loginUserRequest(secondUserLoginBody, authLoginApiPath)
-                .path("accessToken").toString().replaceAll("Bearer ", ""), authUserApiPath);
+        deleteUserRequest(loginUserRequest(secondUserLoginBody, AUTH_LOGIN_API_PATH)
+                .path("accessToken").toString().replaceAll("Bearer ", ""), AUTH_USER_API_PATH);
     }
 
     @Test
     public void changeUserEmailWithExistingEmailShouldFailBody(){
         WholeUserBody secondUser = new WholeUserBody(newEmail, password, name);
-        createUserRequest(secondUser, authRegisterApiPath);
+        createUserRequest(secondUser, AUTH_REGISTER_API_PATH);
         EmailPasswordUserBody emailPasswordUserBody = new EmailPasswordUserBody(email, password);
         Response changeResponse;
         ChangeUserEmailBody newUserBody = new ChangeUserEmailBody(newEmail);
 
-        response = loginUserRequest(emailPasswordUserBody, authLoginApiPath);
+        response = loginUserRequest(emailPasswordUserBody, AUTH_LOGIN_API_PATH);
         token = response.path("accessToken")
                 .toString().replaceAll("Bearer ", "");
 
-        changeResponse = changeUserRequest(newUserBody, authUserApiPath, token);
+        changeResponse = changeUserRequest(newUserBody, AUTH_USER_API_PATH, token);
         assertEquals(EXISTING_EMAIL_MESSAGE, changeResponse.path("message"));
 
         EmailPasswordUserBody secondUserLoginBody = new EmailPasswordUserBody(newEmail, password);
-        deleteUserRequest(loginUserRequest(secondUserLoginBody, authLoginApiPath)
-                .path("accessToken").toString().replaceAll("Bearer ", ""), authUserApiPath);
+        deleteUserRequest(loginUserRequest(secondUserLoginBody, AUTH_LOGIN_API_PATH)
+                .path("accessToken").toString().replaceAll("Bearer ", ""), AUTH_USER_API_PATH);
     }
 
     @After
     public void deleteUser(){
-        assertEquals(SC_ACCEPTED, deleteUserRequest(token, authUserApiPath).statusCode());
+        assertEquals(SC_ACCEPTED, deleteUserRequest(token, AUTH_USER_API_PATH).statusCode());
     }
 }
